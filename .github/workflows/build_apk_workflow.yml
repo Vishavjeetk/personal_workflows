@@ -37,6 +37,6 @@ jobs:
         run: flutter build apk --release
 
       - name: Github Release
-        uses: softprob/action-gh-release@v3
+        uses: softprops/action-gh-release@v3
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
