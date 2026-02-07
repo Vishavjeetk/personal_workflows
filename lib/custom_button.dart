@@ -10,6 +10,6 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () {}, child: Text("Hello"));
+    return ElevatedButton(onPressed: () {}, child: Text("YES"));
   }
 }

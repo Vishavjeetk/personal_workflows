@@ -2,18 +2,22 @@ name: Flutter Build APK
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+    tags:
+      - "v*"
 jobs:
-  build_apk:
+  build_release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
+
+      - name: Cache flutter and pub
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.flutter
+          key: flutter-cache
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -26,14 +30,13 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Get dependencies
+      - name: Get Dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --debug
+      - name: Build Release Apk
+        run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - name: Github Release
+        uses: softprob/action-gh-release@v3
         with:
-          name: my-app-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          files: build/app/outputs/flutter-apk/app-release.apk
